@@ -7,7 +7,7 @@ import { useParams } from 'react-router-dom';
 
 export const PeoplePage = () => {
   const [people, setPeople] = useState<Person[]>([]);
-  const [isLoadint, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
   const { slug: selectedSlug } = useParams();
 
@@ -45,18 +45,14 @@ export const PeoplePage = () => {
       });
   }, []);
 
-  useEffect(() => {
-    if (selectedSlug && !people.some(person => person.slug === selectedSlug)) {
-    }
-  }, [selectedSlug]);
+  const hasNoPeople = !isError && !isLoading && people.length === 0;
 
-  const hasNoPeople = !isError && !isLoadint && people.length === 0;
   return (
     <>
       <h1 className="title">People Page</h1>
       <div className="block">
         <div className="box table-container">
-          {isLoadint && <Loader />}
+          {isLoading && <Loader />}
           {isError && (
             <p data-cy="peopleLoadingError" className="has-text-danger">
               Something went wrong
