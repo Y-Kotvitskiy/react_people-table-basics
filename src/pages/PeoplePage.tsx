@@ -30,7 +30,7 @@ export const PeoplePage = () => {
             );
           }
 
-          return person;
+          return fullPerson;
         });
 
         setPeople(relatives);
@@ -50,6 +50,7 @@ export const PeoplePage = () => {
     }
   }, [selectedSlug]);
 
+  const hasNoPeople = !isError && !isLoadint && people.length === 0;
   return (
     <>
       <h1 className="title">People Page</h1>
@@ -61,9 +62,10 @@ export const PeoplePage = () => {
               Something went wrong
             </p>
           )}
-          {people.length === 0 ? (
+          {hasNoPeople && (
             <p data-cy="noPeopleMessage">There are no people on the server</p>
-          ) : (
+          )}
+          {people.length > 0 && (
             <PeopleTable people={people} selectedSlug={selectedSlug} />
           )}
         </div>
